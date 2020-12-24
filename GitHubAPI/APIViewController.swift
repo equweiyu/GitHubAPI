@@ -36,8 +36,12 @@ class APIViewController: UIViewController {
         if let resultModel = resultModel {
             let result = try? JSONSerialization.jsonObject(with: resultModel.1, options: .allowFragments) as? [String:String]
             self.textView.text = result?.description
-            self.title = resultModel.0
             return
+        }
+        
+        if let lastData = HistoryManage.shared.history.first?.1 {
+            let result = try? JSONSerialization.jsonObject(with: lastData, options: .allowFragments) as? [String:String]
+            self.textView.text = result?.description
         }
         
         let loadData = URLSession.shared
